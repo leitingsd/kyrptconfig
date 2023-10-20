@@ -6,9 +6,11 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 
 public class NotSuckyButton extends ButtonWidget {
     int buttonColor = 16777215;
+    public static final Identifier WIDGETS_TEXTURE = new Identifier("minecraft:textures/gui/widgets.png");
 
     public NotSuckyButton(int x, int y, int width, int height, Text message, PressAction onPress) {
         super(x, y, width, height, message, onPress, DEFAULT_NARRATION_SUPPLIER);
