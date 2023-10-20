@@ -15,7 +15,8 @@ public class ConfigSection extends Screen {
     public List<ConfigItem<?>> configs = new CopyOnWriteArrayList<>();
     public NotSuckyButton sectionSelectionBTN;
     int selectionIndex = 0;
-    int scrollOffset = 0;
+    int horizontalScrollOffset = 0;
+    int verticalScrollOffset = 0;
 
     public ConfigSection(ConfigScreen configScreen, Text title) {
         super(title);
@@ -83,13 +84,14 @@ public class ConfigSection extends Screen {
         for (ConfigItem<?> configItem : configs) {
             configItem.mouseClicked(mouseX, mouseY, button);
         }
-        mouseScrolled(mouseX, mouseY, 0); // update scroll if option changes screen size
+        mouseScrolled(mouseX, mouseY, 0, 0); // update scroll if option changes screen size
         return false;
     }
 
     @Override
-    public boolean mouseScrolled(double mouseX, double mouseY, double amount) {
-        scrollOffset = MathHelper.clamp(scrollOffset + (int) (amount * 15), -calculateSectionHeight(), 0);
+    public boolean mouseScrolled(double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
+        horizontalScrollOffset = MathHelper.clamp(horizontalScrollOffset + (int) (horizontalAmount * 15), -calculateSectionHeight(), 0);
+        verticalScrollOffset = MathHelper.clamp(verticalScrollOffset + (int) (verticalAmount * 15), -calculateSectionHeight(), 0);
         return true;
     }
 
@@ -102,7 +104,7 @@ public class ConfigSection extends Screen {
 
     public void render(DrawContext context, int startY, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
-        int runningY = scrollOffset + startY + 5;
+        int runningY = verticalScrollOffset + startY + 5;
         for (ConfigItem<?> configItem : configs) {
             // if (runningY + configItem.getSize() > 55 && runningY < 55 + height)
             configItem.render(context, 20, runningY, mouseX, mouseY, delta);
@@ -111,7 +113,7 @@ public class ConfigSection extends Screen {
     }
 
     public void render2(DrawContext context, int startY, int mouseX, int mouseY, float delta) {
-        int runningY = scrollOffset + startY + 5;
+        int runningY = verticalScrollOffset + startY + 5;
         for (ConfigItem<?> configItem : configs) {
             configItem.render2(context, 20, runningY, mouseX, mouseY, delta);
             runningY += configItem.getSize() + 3;
