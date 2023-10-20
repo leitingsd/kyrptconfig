@@ -23,21 +23,11 @@ public class NotSuckyButton extends ButtonWidget {
         context.setShaderColor(1.0f, 1.0f, 1.0f, this.alpha);
         RenderSystem.enableBlend();
         RenderSystem.enableDepthTest();
-        context.drawNineSlicedTexture(WIDGETS_TEXTURE, this.getX(), this.getY(), this.getWidth(), this.getHeight(), 20, 4, 200, 20, 0, this.getTextureY());
+        context.drawGuiTexture(WIDGETS_TEXTURE, 20, 4, 200, 20, this.getX(), this.getY(), this.getWidth(), this.getHeight());
         context.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 
         TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
         int i = this.active ? buttonColor : 0xA0A0A0;
         drawMessage(context, textRenderer, i);
-    }
-
-    private int getTextureY() {
-        int i = 1;
-        if (!this.active) {
-            i = 0;
-        } else if (this.isSelected()) {
-            i = 2;
-        }
-        return 46 + i * 20;
     }
 }
